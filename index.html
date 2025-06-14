@@ -2,79 +2,242 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>A Big Question</title>
     <link rel="icon" href="https://wallpapers.com/images/high/minecraft-heart-icon-pixel-art-now8i15gqhyfv2wo.png">
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500&display=swap" rel="stylesheet">
     <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
         body {
-            font-family: 'Roboto', sans-serif;
-            background-color: #f065e9;
+            font-family: 'Space Grotesk', sans-serif;
+            min-height: 100vh;
+            min-height: -webkit-fill-available;
+            background: url('https://indieground.net/wp-content/uploads/2023/03/Freebie-GradientTextures-Preview-04.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            height: 100vh;
-            margin: 0;
-            font-size: 14px;
+            color: white;
+            padding: 1rem;
+            position: relative;
+            overflow: hidden;
         }
-        header, main {
+
+        @supports (-webkit-touch-callout: none) {
+            body {
+                min-height: -webkit-fill-available;
+            }
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            padding: clamp(1.5rem, 5vw, 3rem);
+            border-radius: 20px;
+            width: min(90%, 420px);
             text-align: center;
-            padding: 0 20px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+            transform-style: preserve-3d;
+            perspective: 1000px;
+            animation: container-entrance 1s cubic-bezier(0.23, 1, 0.320, 1);
+            margin: 5rem auto;
         }
-        img {
-            border-radius: 15px;
-            width: 150px;
-            height: 150px;
-            object-fit: cover;
-            margin-bottom: 20px;
+
+        @keyframes container-entrance {
+            0% { opacity: 0; transform: translateY(30px) rotateX(-10deg); }
+            100% { opacity: 1; transform: translateY(0) rotateX(0); }
         }
-        h1 {
-            font-size: 1.5rem;
+
+        .image-container {
+            width: clamp(120px, 30vw, 160px);
+            height: clamp(120px, 30vw, 160px);
+            margin: 0 auto 2rem;
+            position: relative;
+            transform-style: preserve-3d;
+            transition: transform 0.8s cubic-bezier(0.23, 1, 0.320, 1);
+            touch-action: manipulation;
         }
-        button {
-            background-color: #fff;
-            color: #c465f0;
-            border: 2px solid #6455e9;
-            border-radius: 25px;
-            padding: 12px 25px;
-            font-size: 16px;
-            font-weight: bold;
-            cursor: pointer;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            transition: all 0.3s ease;
+
+        @media (hover: hover) {
+            .image-container:hover {
+                transform: rotateY(180deg);
+            }
         }
-        button:hover {
-            background-color: #c465f0;
-            color: #fff;
-            border-color: #fff;
-            transform: scale(1.1);
-            box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2);
+
+        /* Add touch support for image flip */
+        .image-container.flipped {
+            transform: rotateY(180deg);
         }
-        footer {
-            text-align: center;
+
+        .image-front, .image-back {
             position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .image-back {
+            background: rgba(0, 0, 0, 0.7);
+            transform: rotateY(180deg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: clamp(2rem, 6vw, 3rem);
+        }
+
+        img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        h1 {
+            font-size: clamp(1.5rem, 5vw, 2rem);
+            font-weight: 500;
+            margin-bottom: clamp(1.5rem, 4vw, 2.5rem);
+            line-height: 1.3;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+            opacity: 0;
+            animation: fade-up 0.8s cubic-bezier(0.23, 1, 0.320, 1) 0.3s forwards;
+            padding: 0 0.5rem;
+        }
+
+        @keyframes fade-up {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        button {
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            padding: clamp(0.8rem, 3vw, 1rem) clamp(2rem, 5vw, 2.5rem);
+            border-radius: 25px;
+            font-size: clamp(1rem, 4vw, 1.1rem);
+            color: white;
+            cursor: pointer;
+            font-family: 'Space Grotesk', sans-serif;
+            transition: all 0.3s cubic-bezier(0.23, 1, 0.320, 1);
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            opacity: 0;
+            animation: fade-up 0.8s cubic-bezier(0.23, 1, 0.320, 1) 0.6s forwards;
+            touch-action: manipulation;
+            -webkit-tap-highlight-color: transparent;
+            width: 100%;
+            max-width: 300px;
+        }
+
+        button:active {
+            transform: scale(0.98);
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        @media (hover: hover) {
+            button:hover {
+                transform: scale(1.05);
+                background: rgba(255, 255, 255, 0.3);
+                box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            }
+
+            button:hover::before {
+                transform: translateX(100%);
+            }
+        }
+
+        button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(120deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transform: translateX(-100%);
+            transition: 0.6s;
+        }
+
+        footer {
+            position: fixed;
             bottom: 0;
             left: 0;
-            right: 0;
-            padding: 17px 0;
-            background-color: #6455e9;
-            color: white;
-            font-size: 14px;
             width: 100%;
+            padding: clamp(0.8rem, 3vw, 1rem);
+            text-align: center;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            opacity: 0;
+            animation: fade-up 0.8s cubic-bezier(0.23, 1, 0.320, 1) 0.9s forwards;
+            font-size: clamp(0.8rem, 3vw, 1rem);
+            z-index: 10;
+        }
+
+        @media (max-height: 600px) {
+            .container {
+                margin: 4rem auto;
+            }
+            
+            .image-container {
+                width: 100px;
+                height: 100px;
+                margin-bottom: 1rem;
+            }
+
+            h1 {
+                margin-bottom: 1rem;
+            }
+
+            footer {
+                position: relative;
+                margin-top: 2rem;
+            }
         }
     </style>
 </head>
 <body>
-    <header>
-        <img src="https://media.tenor.com/3qBJ83J991QAAAAM/question-mark-cat.gif" alt="Question Mark Cat">
-        <h1>Hey , I have a question for you</h1>
-    </header>
-    <main>
+    <div class="container">
+        <div class="image-container">
+            <div class="image-front">
+                <img src="https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExeGtqM3h4MDY0YjgyZGR0encwMHZnOHA4MDR6aGYzbjU1MmM3eGZzcCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/9tZc9Mzo9K0yOYx38U/giphy.gif" alt="Question Mark Cat">
+            </div>
+            <div class="image-back">?</div>
+        </div>
+        <h1>Hey, I have a question for you</h1>
         <button onclick="location.href='invite.html'">Click to Continue</button>
-    </main>
+    </div>
     <footer>
         Created with ❤️ by Harshit
     </footer>
+
+    <script>
+        // Add touch support for image flip
+        document.querySelector('.image-container').addEventListener('touchstart', function(e) {
+            e.preventDefault();
+            this.classList.toggle('flipped');
+        });
+
+        // Fix iOS 100vh issue
+        document.documentElement.style.setProperty('--vh', `${window.innerHeight * 0.01}px`);
+        window.addEventListener('resize', () => {
+            document.documentElement.style.setProperty('--vh', `${window.innerHeight * 0.01}px`);
+        });
+    </script>
 </body>
 </html>
